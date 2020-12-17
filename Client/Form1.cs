@@ -33,6 +33,11 @@ namespace Client
             textBox2.Enabled = true;
             buttonConnect.Enabled = false;
             textBox1.Enabled = false;
+            // send client's name to the server
+            var stream = client.GetStream();
+            string message = "My name:" + textBox1.Text;
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            stream.Write(data, 0, data.Length);
         }
 
         private void buttonPost_Click(object sender, EventArgs e)
@@ -40,15 +45,21 @@ namespace Client
             if (labels.Count > 0)
             {
                 char symbol = labels[labels.Count - 1].Text.ToLower()[labels[labels.Count - 1].Text.Length - 1];
-                if (symbol != label2.Text.ToLower()[0])
+                if (symbol != textBox2.Text.ToLower()[0])
                 {
-                    MessageBox.Show($"Your city name must start with '{symbol}'"); 
+                    MessageBox.Show($"Your city name must start with '{symbol}'. You: {textBox2.Text.ToLower()[0]}"); 
                     return;
                 }
             }
+            if (textBox2.Text.Contains(':'))
+            {
+                MessageBox.Show("Please don't use any special characters like ':'!");
+                return;
+            }
             // check if input is city
+            // check whose queue is now
             var stream = client.GetStream();
-            string message = label2.Text;
+            string message = textBox2.Text;
             byte[] data = Encoding.Unicode.GetBytes(message);
             stream.Write(data, 0, data.Length);
             data = new byte[64];
@@ -79,8 +90,8 @@ namespace Client
         }
         List<Label> labels = new List<Label>();
         TcpClient client = new TcpClient(address, port);
-        const int x = 200, y = 200; // TBD
-        const int offset = 30;
-        const int numberOfMessagesDisplayedSimultaneously = 10;
+        const int x = 200, y = 270; // TBD
+        const int offset = 20;
+        const int numberOfMessagesDisplayedSimultaneously = 14;
     }
 }

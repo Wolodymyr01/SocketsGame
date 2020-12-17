@@ -12,6 +12,7 @@ namespace Server
             this.client = client;
         }
         public readonly TcpClient client;
+        string name;
         public void Process()
         {
             NetworkStream stream = null;
@@ -30,7 +31,12 @@ namespace Server
                     }
                     while (stream.DataAvailable);
                     string message = builder.ToString();
-                    message = "User:" + message;
+                    if (message.Contains(':'))
+                    {
+                        name = message.Substring(message.IndexOf(':') + 1);
+                        continue;
+                    }
+                    message = $"{name}: " + message;
                     data = Encoding.Unicode.GetBytes(message);
                     stream.Write(data, 0, data.Length);
                 }
