@@ -37,42 +37,49 @@ namespace Client
 
         private void buttonPost_Click(object sender, EventArgs e)
         {
-            // check if input is valid
-            using (TcpClient client = new TcpClient(address, port))
+            if (labels.Count > 0)
             {
-                var stream = client.GetStream();
-                string message = label2.Text;
-                byte[] data = Encoding.Unicode.GetBytes(message);
-                stream.Write(data, 0, data.Length);
-                data = new byte[64];
-                StringBuilder builder = new StringBuilder();
-                int bytes = 0;
-                do
+                char symbol = labels[labels.Count - 1].Text.ToLower()[labels[labels.Count - 1].Text.Length - 1];
+                if (symbol != label2.Text.ToLower()[0])
                 {
-                    bytes = stream.Read(data, 0, data.Length);
-                    builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+                    MessageBox.Show($"Your city name must start with '{symbol}'"); 
+                    return;
                 }
-                while (stream.DataAvailable);
-                Label label = new Label();
-                label.Text = builder.ToString();
-                label.Location = new Point(x, y);
-                foreach (var item in labels)
-                {
-                    Point oldPoint = item.Location;
-                    item.Location = new Point(oldPoint.X, oldPoint.Y - offset);
-                }
-                labels.Add(label);
-                if (labels.Count > numberOfMessagesDisplayedSimultaneously)
-                {
-                    var _tefDisposingLabel = labels[0];
-                    labels.RemoveAt(0);
-                    _tefDisposingLabel.Dispose();
-                }
-                Controls.Add(label);
             }
+            // check if input is city
+            var stream = client.GetStream();
+            string message = label2.Text;
+            byte[] data = Encoding.Unicode.GetBytes(message);
+            stream.Write(data, 0, data.Length);
+            data = new byte[64];
+            StringBuilder builder = new StringBuilder();
+            int bytes = 0;
+            do
+            {
+                bytes = stream.Read(data, 0, data.Length);
+                builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
+            }
+            while (stream.DataAvailable);
+            Label label = new Label();
+            label.Text = builder.ToString();
+            label.Location = new Point(x, y);
+            foreach (var item in labels)
+            {
+                Point oldPoint = item.Location;
+                item.Location = new Point(oldPoint.X, oldPoint.Y - offset);
+            }
+            labels.Add(label);
+            if (labels.Count > numberOfMessagesDisplayedSimultaneously)
+            {
+                var _tefDisposingLabel = labels[0];
+                labels.RemoveAt(0);
+                _tefDisposingLabel.Dispose();
+            }
+            Controls.Add(label);
         }
         List<Label> labels = new List<Label>();
-        const int x = 200, y = 100; // TBD
+        TcpClient client = new TcpClient(address, port);
+        const int x = 200, y = 200; // TBD
         const int offset = 30;
         const int numberOfMessagesDisplayedSimultaneously = 10;
     }

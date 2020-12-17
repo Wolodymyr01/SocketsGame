@@ -30,8 +30,7 @@ namespace Server
                     }
                     while (stream.DataAvailable);
                     string message = builder.ToString();
-                    Console.WriteLine(message);
-                    message = message.Substring(message.IndexOf(':') + 1).Trim().ToUpper();
+                    message = "User:" + message;
                     data = Encoding.Unicode.GetBytes(message);
                     stream.Write(data, 0, data.Length);
                 }
