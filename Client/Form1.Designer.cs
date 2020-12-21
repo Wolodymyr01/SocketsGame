@@ -35,6 +35,9 @@ namespace Client
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.buttonPost = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.serverButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // textBox1
@@ -92,11 +95,32 @@ namespace Client
             this.buttonPost.UseVisualStyleBackColor = true;
             this.buttonPost.Click += new System.EventHandler(this.buttonPost_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.pictureBox1.Location = new System.Drawing.Point(210, 408);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(30, 30);
+            this.pictureBox1.TabIndex = 6;
+            this.pictureBox1.TabStop = false;
+            // 
+            // serverButton
+            // 
+            this.serverButton.Location = new System.Drawing.Point(160, 13);
+            this.serverButton.Name = "serverButton";
+            this.serverButton.Size = new System.Drawing.Size(125, 40);
+            this.serverButton.TabIndex = 7;
+            this.serverButton.Text = "New server";
+            this.serverButton.UseVisualStyleBackColor = true;
+            this.serverButton.Click += new System.EventHandler(this.serverButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.serverButton);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.buttonPost);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox2);
@@ -105,6 +129,7 @@ namespace Client
             this.Controls.Add(this.textBox1);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -118,5 +143,7 @@ namespace Client
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonPost;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button serverButton;
     }
 }

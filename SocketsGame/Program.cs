@@ -5,15 +5,14 @@ using System.Net.Sockets;
 
 namespace Server
 {
-    class Program
+    public class Program
     {
-        const int port = 8888;
         static TcpListener listener;
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             try
             {
-                listener = new TcpListener(IPAddress.Parse("127.0.0.1"), port);
+                listener = new TcpListener(IPAddress.Parse(args?[0]), int.Parse(args?[1]));
                 listener.Start();
                 Console.WriteLine("Ожидание подключений...");
 

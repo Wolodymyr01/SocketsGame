@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
+using System.Threading;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Net.Sockets;
+using Server;
 using static Client.ClientEnterPoint;
 
 namespace Client
@@ -29,10 +30,12 @@ namespace Client
                 MessageBox.Show("Name is empty. Try again");
                 return;
             }
+            client = new TcpClient(address, port);
             buttonPost.Enabled = true;
             textBox2.Enabled = true;
             buttonConnect.Enabled = false;
             textBox1.Enabled = false;
+            serverButton.Enabled = false;
             // send client's name to the server
             var stream = client.GetStream();
             string message = "My name:" + textBox1.Text;
@@ -57,7 +60,6 @@ namespace Client
                 return;
             }
             // check if input is city
-            // check whose queue is now
             var stream = client.GetStream();
             string message = textBox2.Text;
             byte[] data = Encoding.Unicode.GetBytes(message);
@@ -71,6 +73,12 @@ namespace Client
                 builder.Append(Encoding.Unicode.GetString(data, 0, bytes));
             }
             while (stream.DataAvailable);
+            message = builder.ToString();
+            if (message.Contains("Error:"))
+            {
+                MessageBox.Show(message);
+                return;
+            }
             Label label = new Label();
             label.Text = builder.ToString();
             label.Location = new Point(x, y);
@@ -89,9 +97,25 @@ namespace Client
             Controls.Add(label);
         }
         List<Label> labels = new List<Label>();
-        TcpClient client = new TcpClient(address, port);
+        TcpClient client;
         const int x = 200, y = 270; // TBD
         const int offset = 20;
+        bool isServer = false;
+
+        private void serverButton_Click(object sender, EventArgs e)
+        {
+            if (!isServer)
+            {
+                // another thread
+                Program.Main(new string[] { "127.0.0.1", "8888" });
+                isServer = true;
+            }
+            else
+            {
+                // stop thread
+            }
+        }
+
         const int numberOfMessagesDisplayedSimultaneously = 14;
     }
 }
