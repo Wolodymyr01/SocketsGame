@@ -17,10 +17,17 @@ namespace Client
         {
             InitializeComponent();
         }
+        List<Label> labels = new List<Label>();
+        TcpClient client;
+        const int x = 200, y = 270; // TBD
+        const int offset = 20;
+        bool isServer = false;
+        const int numberOfMessagesDisplayedSimultaneously = 14;
+        Thread server;
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+            // show tips?
         }
 
         private void buttonConnect_Click(object sender, EventArgs e)
@@ -30,12 +37,15 @@ namespace Client
                 MessageBox.Show("Name is empty. Try again");
                 return;
             }
-            client = new TcpClient(address, port);
+            var _port = int.Parse(textBoxPort.Text ?? port.ToString());
+            client = new TcpClient(textBoxIpServer.Text ?? address, _port);
             buttonPost.Enabled = true;
             textBox2.Enabled = true;
             buttonConnect.Enabled = false;
             textBox1.Enabled = false;
-            serverButton.Enabled = false;
+            textBoxIpServer.Enabled = false;
+            textBoxPort.Enabled = false;
+            if (!isServer) serverButton.Enabled = false;
             // send client's name to the server
             var stream = client.GetStream();
             string message = "My name:" + textBox1.Text;
@@ -96,26 +106,25 @@ namespace Client
             }
             Controls.Add(label);
         }
-        List<Label> labels = new List<Label>();
-        TcpClient client;
-        const int x = 200, y = 270; // TBD
-        const int offset = 20;
-        bool isServer = false;
-
         private void serverButton_Click(object sender, EventArgs e)
         {
             if (!isServer)
             {
-                // another thread
-                Program.Main(new string[] { "127.0.0.1", "8888" });
+                serverButton.Text = "Stop server";
                 isServer = true;
+                server = new Thread(() => StartServer());
+                server.Start();
             }
             else
             {
-                // stop thread
+                server.Abort();
+                isServer = false;
+                serverButton.Text = "New server";
             }
         }
-
-        const int numberOfMessagesDisplayedSimultaneously = 14;
+        void StartServer()
+        {
+            Program.Main(new string[] { textBoxIpServer.Text, textBoxPort.Text });
+        }
     }
 }

@@ -37,6 +37,10 @@ namespace Client
             this.buttonPost = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.serverButton = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBoxIpServer = new System.Windows.Forms.TextBox();
+            this.textBoxPort = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,7 +63,7 @@ namespace Client
             // 
             // buttonConnect
             // 
-            this.buttonConnect.Location = new System.Drawing.Point(12, 95);
+            this.buttonConnect.Location = new System.Drawing.Point(12, 167);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(125, 42);
             this.buttonConnect.TabIndex = 2;
@@ -106,7 +110,7 @@ namespace Client
             // 
             // serverButton
             // 
-            this.serverButton.Location = new System.Drawing.Point(160, 13);
+            this.serverButton.Location = new System.Drawing.Point(652, 109);
             this.serverButton.Name = "serverButton";
             this.serverButton.Size = new System.Drawing.Size(125, 40);
             this.serverButton.TabIndex = 7;
@@ -114,11 +118,49 @@ namespace Client
             this.serverButton.UseVisualStyleBackColor = true;
             this.serverButton.Click += new System.EventHandler(this.serverButton_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(432, 125);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(67, 20);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "Server ip";
+            // 
+            // textBoxIpServer
+            // 
+            this.textBoxIpServer.Location = new System.Drawing.Point(505, 122);
+            this.textBoxIpServer.Name = "textBoxIpServer";
+            this.textBoxIpServer.Size = new System.Drawing.Size(125, 27);
+            this.textBoxIpServer.TabIndex = 9;
+            this.textBoxIpServer.Text = "127.0.0.1";
+            // 
+            // textBoxPort
+            // 
+            this.textBoxPort.Location = new System.Drawing.Point(505, 74);
+            this.textBoxPort.Name = "textBoxPort";
+            this.textBoxPort.Size = new System.Drawing.Size(125, 27);
+            this.textBoxPort.TabIndex = 10;
+            this.textBoxPort.Text = "8888";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(451, 77);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 20);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "Port";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.textBoxPort);
+            this.Controls.Add(this.textBoxIpServer);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.serverButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.buttonPost);
@@ -145,5 +187,9 @@ namespace Client
         private System.Windows.Forms.Button buttonPost;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button serverButton;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBoxIpServer;
+        private System.Windows.Forms.TextBox textBoxPort;
+        private System.Windows.Forms.Label label4;
     }
 }
