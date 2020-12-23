@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net.Sockets;
 using Server;
+using System.IO;
 using static Client.ClientEnterPoint;
 
 namespace Client
@@ -16,6 +17,7 @@ namespace Client
         public Form1()
         {
             InitializeComponent();
+
         }
         List<Label> labels = new List<Label>();
         TcpClient client;
@@ -69,7 +71,6 @@ namespace Client
                 MessageBox.Show("Please don't use any special characters like ':'!");
                 return;
             }
-            // check if input is city
             var stream = client.GetStream();
             string message = textBox2.Text;
             byte[] data = Encoding.Unicode.GetBytes(message);
@@ -111,12 +112,16 @@ namespace Client
             if (!isServer)
             {
                 serverButton.Text = "Stop server";
+                textBoxIpServer.Enabled = false;
+                textBoxPort.Enabled = false;
                 isServer = true;
                 server = new Thread(() => StartServer());
                 server.Start();
             }
             else
             {
+                textBoxIpServer.Enabled = true;
+                textBoxPort.Enabled = true;
                 server.Abort();
                 isServer = false;
                 serverButton.Text = "New server";
